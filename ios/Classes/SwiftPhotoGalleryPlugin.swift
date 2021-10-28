@@ -383,11 +383,15 @@ public class SwiftPhotoGalleryPlugin: NSObject, FlutterPlugin {
           DispatchQueue.main.async(execute: {
             do {
               let avAsset = avAsset as? AVURLAsset
-              let data = try Data(contentsOf: avAsset!.url)
-              let fileExt = self.extractFileExtensionFromAsset(asset: asset)
-              let filepath = self.exportPathForAsset(asset: asset, ext: fileExt)
-              try! data.write(to: filepath, options: .atomic)
-              completion(filepath.absoluteString, nil)
+              if avAsset != nil {
+                let data = try Data(contentsOf: avAsset!.url)
+                let fileExt = self.extractFileExtensionFromAsset(asset: asset)
+                let filepath = self.exportPathForAsset(asset: asset, ext: fileExt)
+                try! data.write(to: filepath, options: .atomic)
+                completion(filepath.absoluteString, nil)
+              } else {
+                print("Doesn’t contain a value.")
+              }
             } catch {
               completion(nil, NSError(domain: "photo_gallery", code: 500, userInfo: nil))
             }
