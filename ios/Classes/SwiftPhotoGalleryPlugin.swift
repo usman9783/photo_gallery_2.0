@@ -347,7 +347,7 @@ public class SwiftPhotoGalleryPlugin: NSObject, FlutterPlugin {
         manager.requestImageData(
           for: asset,
           options: options,
-          resultHandler: { (data: Data?, uti: String?, info) in
+          resultHandler: { (data: Data?, uti: String?, orientation, info) in
             DispatchQueue.main.async(execute: {
               guard let imageData = data else {
                 completion(nil, NSError(domain: "photo_gallery", code: 404, userInfo: nil))
@@ -442,7 +442,7 @@ public class SwiftPhotoGalleryPlugin: NSObject, FlutterPlugin {
     manager.requestImageData(
       for: asset,
       options: nil,
-      resultHandler: { (data: Data?, uti: String?, info: ([AnyHashable: Any]?)) -> Void in
+      resultHandler: { (data: Data?, uti: String?, orientation: UIImage.Orientation, info: ([AnyHashable: Any]?)) -> Void in
         completion([
           "id": asset.localIdentifier,
           "filename": filename,
