@@ -347,7 +347,7 @@ public class SwiftPhotoGalleryPlugin: NSObject, FlutterPlugin {
         manager.requestImageData(
           for: asset,
           options: options,
-          resultHandler: { (data: Data?, uti: String?, orientation, info) in
+          resultHandler: { (data: Data?, uti: String?, info) in
             DispatchQueue.main.async(execute: {
               guard let imageData = data else {
                 completion(nil, NSError(domain: "photo_gallery", code: 404, userInfo: nil))
@@ -442,7 +442,7 @@ public class SwiftPhotoGalleryPlugin: NSObject, FlutterPlugin {
     manager.requestImageData(
       for: asset,
       options: nil,
-      resultHandler: { (data: Data?, uti: String?, orientation: UIImage.Orientation, info: ([AnyHashable: Any]?)) -> Void in
+      resultHandler: { (data: Data?, uti: String?, info: ([AnyHashable: Any]?)) -> Void in
         completion([
           "id": asset.localIdentifier,
           "filename": filename,
@@ -451,7 +451,6 @@ public class SwiftPhotoGalleryPlugin: NSObject, FlutterPlugin {
           "mimeType": mimeType,
           "height": asset.pixelHeight,
           "width": asset.pixelWidth,
-          "orientation": self.toOrientationValue(orientation: orientation),
           "duration": NSInteger(asset.duration * 1000),
           "creationDate": (asset.creationDate != nil) ? NSInteger(asset.creationDate!.timeIntervalSince1970 * 1000) : nil,
           "modifiedDate": (asset.modificationDate != nil) ? NSInteger(asset.modificationDate!.timeIntervalSince1970 * 1000) : nil
@@ -483,29 +482,6 @@ public class SwiftPhotoGalleryPlugin: NSObject, FlutterPlugin {
     case PHAssetMediaType.video: return "video"
     case PHAssetMediaType.audio: return "audio"
     default: return nil
-    }
-  }
-  
-  private func toOrientationValue(orientation: UIImage.Orientation) -> Int {
-    switch orientation {
-    case UIImage.Orientation.up:
-      return 1
-    case UIImage.Orientation.down:
-      return 3
-    case UIImage.Orientation.left:
-      return 6
-    case UIImage.Orientation.right:
-      return 8
-    case UIImage.Orientation.upMirrored:
-      return 2
-    case UIImage.Orientation.downMirrored:
-      return 4
-    case UIImage.Orientation.leftMirrored:
-      return 5
-    case UIImage.Orientation.rightMirrored:
-      return 7
-    @unknown default:
-      return 0
     }
   }
   

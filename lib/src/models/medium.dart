@@ -23,9 +23,6 @@ class Medium {
   /// The medium height.
   final int? height;
 
-  /// The medium orientation.
-  final int? orientation;
-
   /// The medium mimeType.
   final String? mimeType;
 
@@ -45,7 +42,6 @@ class Medium {
     this.mediumType,
     this.width,
     this.height,
-    this.orientation = 0,
     this.mimeType,
     this.duration = 0,
     this.creationDate,
@@ -60,7 +56,6 @@ class Medium {
         mediumType = jsonToMediumType(json["mediumType"]),
         width = json["width"],
         height = json["height"],
-        orientation = json["orientation"],
         mimeType = json["mimeType"],
         duration = json['duration'] ?? 0,
         creationDate = json['creationDate'] != null
@@ -78,7 +73,6 @@ class Medium {
       mediumType: jsonToMediumType(map['mediumType']),
       width: map['width'],
       height: map['height'],
-      orientation: map['orientation'],
       mimeType: map["mimeType"],
       creationDate: map['creationDate'],
       modifiedDate: map['modifiedDate'],
@@ -92,7 +86,6 @@ class Medium {
       "title": this.title,
       "mediumType": mediumTypeToJson(this.mediumType),
       "height": this.height,
-      "orientation": this.orientation,
       "mimeType": this.mimeType,
       "width": this.width,
       "creationDate": this.creationDate,
@@ -134,7 +127,6 @@ class Medium {
           mediumType == other.mediumType &&
           width == other.width &&
           height == other.height &&
-          orientation == other.orientation &&
           mimeType == other.mimeType &&
           creationDate == other.creationDate &&
           modifiedDate == other.modifiedDate;
@@ -147,7 +139,6 @@ class Medium {
       mediumType.hashCode ^
       width.hashCode ^
       height.hashCode ^
-      orientation.hashCode ^
       mimeType.hashCode ^
       creationDate.hashCode ^
       modifiedDate.hashCode;
@@ -160,7 +151,6 @@ class Medium {
         'mediumType: $mediumType, '
         'width: $width, '
         'height: $height, '
-        'orientation: $orientation, '
         'mimeType: $mimeType, '
         'creationDate: $creationDate, '
         'modifiedDate: $modifiedDate}';
